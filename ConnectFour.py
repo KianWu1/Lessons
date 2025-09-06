@@ -58,7 +58,8 @@ def checkWin(currPlayer):
     
 #\ is tthe escape key from a string to run a command. \n prints a new line character.
 os.system("cls")
-while True:
+keepPlaying = True
+while keepPlaying:
     while True:
         drawBoard()
         if currPlayer == 1:
@@ -78,7 +79,12 @@ while True:
             print()
             drawBoard()
             playAgain = input("Would you like to play again?: ")
+            if playAgain[0].lower() != "y":
+                keepPlaying = False
+                print()
+                print("Thank you for playing!")
             break
+
         
     #Change player's tturn
         currPlayer = currPlayer*-1
@@ -91,7 +97,9 @@ while True:
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0]]
+    currPlayer = 1
 
+    os.system("cls")
 
 # Instead of printing out the literal number from the board,
 # use if statements to print out a red, blue emoji 🔴 🔵 ⬛
@@ -99,3 +107,5 @@ while True:
 #New HW: Each time you add a piece, it changes color to the next player's color
 
 #New NEW HW Add play again function after someone wins
+
+#NEW NEW HW
