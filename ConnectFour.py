@@ -60,30 +60,50 @@ def checkWin(currPlayer):
 os.system("cls")
 keepPlaying = True
 while keepPlaying:
+    os.system("cls")
+    
     while True:
-        drawBoard()
-        if currPlayer == 1:
-            print("\nIt is 🔴's turn.")
-        else:
-            print("\nIt is 🔵's turn.")
-        location=input("Where would you like to go? ")
-        addPiece(int(location), currPlayer)
-        os.system("cls")
-
-        if checkWin(currPlayer):
-            if currPlayer == 1:
-                os.system("cls")
+        if checkWin(currPlayer*-1):
+            if currPlayer == -1:
                 print("Red has won!")
             else:
                 print ("Blue has won!")
             print()
             drawBoard()
             playAgain = input("Would you like to play again?: ")
-            if playAgain[0].lower() != "y":
+            if playAgain[0].lower() == "y":
+                break
+            if playAgain[0].lower() == "n":
+                print("Thank you for playing")
                 keepPlaying = False
                 print()
-                print("Thank you for playing!")
-            break
+                break
+            else:
+                os.system("cls")
+                print("Invalid index")
+                continue
+
+        drawBoard()
+        if currPlayer == 1:
+            print("\nIt is 🔴's turn.")
+        else:
+            print("\nIt is 🔵's turn.")
+        location=input("Where would you like to go? ")
+        
+        try:
+            if int(location) < 1 or int(location) > 7:
+                os.system("cls")
+                print("Invalid index")
+                continue
+            else:
+                addPiece(int(location), currPlayer)
+            os.system("cls")
+        except:
+            os.system("cls")
+            print("please enter a number")
+            print()
+            continue
+       
 
         
     #Change player's tturn
@@ -108,4 +128,4 @@ while keepPlaying:
 
 #New NEW HW Add play again function after someone wins
 
-#NEW NEW HW
+#NEW NEW HW: add sanitizing inputs, parameters
