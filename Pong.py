@@ -1,6 +1,10 @@
 # Example file showing a circle moving on screen
 import pygame
 
+PLAYER_WIDTH = 25
+PLAYER_HEIGHT = 100
+BALL_WIDTH = 20
+
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
@@ -8,7 +12,9 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+player_pos = pygame.Vector2(screen.get_width() *0.9 - PLAYER_WIDTH, screen.get_height() / 2)
+player_pos2 = pygame.Vector2(screen.get_width() *0.1, screen.get_height() / 2)
+ball_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 
 while running:
     # poll for events
@@ -18,19 +24,40 @@ while running:
             running = False
 
     # fill the screen with a color to wipe away anything from last frame
-    screen.fill("purple")
+    screen.fill("black")
 
-    pygame.draw.circle(screen, "red", player_pos, 40)
+    pygame.draw.rect(screen, "red", (*player_pos, PLAYER_WIDTH, PLAYER_HEIGHT))
+    player2 = pygame.draw.rect(screen, "blue", (*player_pos2, PLAYER_WIDTH, PLAYER_HEIGHT))
+    pygame.draw.circle(screen, "white", ball_pos, BALL_WIDTH)
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:
+    if keys[pygame.K_UP]:
         player_pos.y -= 300 * dt
-    if keys[pygame.K_s]:
+    if keys[pygame.K_DOWN]:
         player_pos.y += 300 * dt
-    if keys[pygame.K_a]:
-        player_pos.x -= 300 * dt
-    if keys[pygame.K_d]:
-        player_pos.x += 300 * dt
+
+    if player_pos.y>screen.get_height() - PLAYER_HEIGHT:
+        player_pos.y=screen.get_height() - PLAYER_HEIGHT
+    elif player_pos.y<0:
+        player_pos.y=0
+    
+
+
+    if keys[pygame.K_w]:
+        player_pos2.y -= 300 * dt
+    if keys[pygame.K_s]:
+        player_pos2.y += 300 * dt
+
+    if player_pos2.y>screen.get_height() - PLAYER_HEIGHT:
+        player_pos2.y=screen.get_height() - PLAYER_HEIGHT
+    elif player_pos2.y<0:
+        player_pos2.y=0
+   
+   
+    # if keys[pygame.K_a]:
+    #     player_pos.x -= 300 * dt
+    # if keys[pygame.K_d]:
+    #     player_pos.x += 300 * dt
 
     # flip() the display to put your work on screen
     pygame.display.flip()
@@ -43,3 +70,4 @@ while running:
 pygame.quit()
 
 #HW: Make circle a rectangle
+#New HW: Add Text to the Screen that says Krish Wu's Pong
